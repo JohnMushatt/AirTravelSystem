@@ -8,7 +8,7 @@ public class DatabaseParser {
 	private File csv_file;
 	private String csv_file_name;
 	private final String DELIMTER = ",";
-	private final String ENCODING = "UTF-8";
+	private final String ENCODING = "utf-8";
 	// Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active
 	
 	public DatabaseParser (String csv_file_name) {
@@ -18,39 +18,70 @@ public class DatabaseParser {
 			this.csv_file= new File(this.csv_file_name);
 			System.out.println("File name: " + this.csv_file_name +"\n");
 			this.csv_scanner = new Scanner(this.csv_file, this.ENCODING);
-			this.csv_scanner.useDelimiter(DELIMTER);
+			//this.csv_scanner.useDelimiter(DELIMTER);
 
 		}
 		catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		}
 	}
-	private String getAirportNames(String line) {
-		String name;
-		Scanner scanner = new Scanner(line);
-		name = scanner.next();
-		System.out.println("This is line " + line);
-		//name = name.substring(1);
-		//name = name.substring(0, name.indexOf(DELIMTER) +1);
-		//name = name.substring(name.indexOf("\"") + 1, name.indexOf("\""));
-		return name;
+	private String getAirportName(String line) {
+		
+		line= line.substring(line.indexOf(DELIMTER) + 1);
+		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
+	private String getAirportCountry(String line) { 
+		
+		return line;
+	}
+	
+	private String getAirportCity(String line) { 
+		
+		return line;
+	}
+	
+	private String getAirportIATA(String line) { 
+		
+		return line;
+	}
+	
+	private double getAirportLatitude(String line) {
+		
+		return 0;
+	}
+	
+	private double getAirportLongitude(String line) { 
+		
+		return 0;
+	}
+	
+	private String getAirportTimezone(String line) {
+		
+		return line;
+	}
+	
+	private boolean isAirport(String line) {
+		
+		return false;
+	}
 	//number,airport,country
 	public ArrayList<Airport> parseAirports() {
 		ArrayList<Airport> airports = new ArrayList<>();
-		int count = 0;
-		while(this.csv_scanner.hasNextLine()) {
+		boolean finished_current_line = false;
+		
+		while (this.csv_scanner.hasNextLine()) {
+			
 			String current_line = this.csv_scanner.nextLine();
-			current_line = current_line.substring(current_line.indexOf(DELIMTER) + 1);
 			
-			System.out.println(getAirportNames(current_line));
-			count++;
-			
-			//airports.add(new Airport(getAirportName(this.csv_scanner.nextLine()), 0, 0));
-			
+			if(isAirport(current_line)) {
+				
+				airports.add(new Airport(getAirportName(current_line), getAirportCountry(current_line),
+						getAirportCity(current_line), getAirportIATA(current_line), getAirportLatitude(current_line),
+						getAirportLongitude(current_line), getAirportTimezone(current_line)));
+			}
 		}
-		System.out.println("Total: " + count);
+		
 		return airports;
 	}
 	

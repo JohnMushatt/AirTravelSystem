@@ -6,12 +6,16 @@ public class Airport {
 	private ArrayList<Route> airport_routes = new ArrayList<>();
 	private final double LONGITUDE;
 	private final double LATITUDE;
+	private String country;
+	private String city;
 	
-	public Airport (String name, double longitude, double latitude) {
+	public Airport (String name, String country, String city, String code, double longitude, double latitude, String timezone) {
 		
 		this.airport_name = name;
 		this.LONGITUDE= longitude;
 		this.LATITUDE = latitude;
+		this.country = country;
+		this.city = city;
 	}
 	
 	public void addRoute(Route route) {
