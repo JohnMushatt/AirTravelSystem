@@ -31,24 +31,39 @@ public class DatabaseParser {
 		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
-	private String getAirportCountry(String line) { 
-		
-		return line;
-	}
-	
 	private String getAirportCity(String line) { 
 		
-		return line;
+		for(int i = 1; i>0;i--) {
+			line.substring(line.indexOf(DELIMTER));			
+		}
+		return line.substring(0, line.indexOf(DELIMTER));
+		
 	}
+	private String getAirportCountry(String line) { 
+		
+		for(int i = 2; i>0;i--) {
+			line.substring(line.indexOf(DELIMTER));			
+		}
+		return line.substring(0, line.indexOf(DELIMTER));
+	}
+	
+	
 	
 	private String getAirportIATA(String line) { 
 		
-		return line;
+		for(int i = 4; i>0;i--) {
+			line.substring(line.indexOf(DELIMTER));			
+		}
+		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
 	private double getAirportLatitude(String line) {
 		
-		return 0;
+		for(int i = 5; i>0;i--) {
+			
+			line.substring(line.indexOf(DELIMTER));			
+		}
+		return Double.parseDouble(line.substring(0, line.indexOf(DELIMTER)));
 	}
 	
 	private double getAirportLongitude(String line) { 
@@ -58,7 +73,14 @@ public class DatabaseParser {
 	
 	private String getAirportTimezone(String line) {
 		
-		return line;
+		for(int i = 4; i>0;i--) {
+			
+			line.substring(line.indexOf(DELIMTER));
+			
+		}
+		
+		return line.substring(0, line.indexOf(DELIMTER));	
+		
 	}
 	
 	private boolean isAirport(String line) {
@@ -79,6 +101,7 @@ public class DatabaseParser {
 				airports.add(new Airport(getAirportName(current_line), getAirportCountry(current_line),
 						getAirportCity(current_line), getAirportIATA(current_line), getAirportLatitude(current_line),
 						getAirportLongitude(current_line), getAirportTimezone(current_line)));
+				finished_current_line = true;
 			}
 		}
 		

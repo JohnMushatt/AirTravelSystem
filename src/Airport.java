@@ -30,6 +30,8 @@ public class Airport {
 	private double getLatitude() {
 		return this.LATITUDE;
 	}
+	
+	//MOVE TO ROUTE
 	private double setRouteDistance(Route route) {
 		
 		double latDistance = Math.toRadians(route.getSourceAirport().getLatitude()
