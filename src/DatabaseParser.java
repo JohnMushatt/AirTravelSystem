@@ -7,7 +7,7 @@ public class DatabaseParser {
 	private Scanner csv_scanner;
 	private File csv_file;
 	private String csv_file_name;
-	private final String DELIMTER = ",";
+	private final char DELIMTER = ',';
 	private final String ENCODING = "utf-8";
 	// Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active
 	
@@ -27,33 +27,40 @@ public class DatabaseParser {
 	}
 	private String getAirportName(String line) {
 		
-		line= line.substring(line.indexOf(DELIMTER) + 1);
+		for(int i = 1; i>0;i--) {
+
+			line = line.substring(line.indexOf(DELIMTER)+1);
+			
+		}
+
 		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
 	private String getAirportCity(String line) { 
 		
-		for(int i = 1; i>0;i--) {
-			line.substring(line.indexOf(DELIMTER));			
+		for(int i = 2; i>0;i--) {
+			
+			line = line.substring(line.indexOf(DELIMTER)+1);			
 		}
+
 		return line.substring(0, line.indexOf(DELIMTER));
 		
 	}
 	private String getAirportCountry(String line) { 
 		
-		for(int i = 2; i>0;i--) {
-			line.substring(line.indexOf(DELIMTER));			
+		for(int i = 3; i>0;i--) {
+			line = line.substring(line.indexOf(DELIMTER)+1);			
 		}
+
 		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
-	
-	
 	private String getAirportIATA(String line) { 
 		
-		for(int i = 4; i>0;i--) {
+		for(int i = 3; i>0;i--) {
 			line.substring(line.indexOf(DELIMTER));			
 		}
+
 		return line.substring(0, line.indexOf(DELIMTER));
 	}
 	
@@ -63,47 +70,44 @@ public class DatabaseParser {
 			
 			line.substring(line.indexOf(DELIMTER));			
 		}
+
 		return Double.parseDouble(line.substring(0, line.indexOf(DELIMTER)));
 	}
 	
 	private double getAirportLongitude(String line) { 
-		
-		return 0;
+
+		for(int i = 6; i>0;i--) {
+			
+			line.substring(line.indexOf(DELIMTER));			
+		}
+
+		return Double.parseDouble(line.substring(0, line.indexOf(DELIMTER)));
 	}
 	
 	private String getAirportTimezone(String line) {
 		
-		for(int i = 4; i>0;i--) {
+		for(int i = 8; i>0;i--) {
 			
 			line.substring(line.indexOf(DELIMTER));
 			
 		}
-		
+
 		return line.substring(0, line.indexOf(DELIMTER));	
 		
 	}
 	
-	private boolean isAirport(String line) {
-		
-		return false;
-	}
 	//number,airport,country
 	public ArrayList<Airport> parseAirports() {
 		ArrayList<Airport> airports = new ArrayList<>();
-		boolean finished_current_line = false;
 		
-		while (this.csv_scanner.hasNextLine()) {
+		//while (this.csv_scanner.hasNextLine()) {
 			
 			String current_line = this.csv_scanner.nextLine();
-			
-			if(isAirport(current_line)) {
-				
-				airports.add(new Airport(getAirportName(current_line), getAirportCountry(current_line),
-						getAirportCity(current_line), getAirportIATA(current_line), getAirportLatitude(current_line),
-						getAirportLongitude(current_line), getAirportTimezone(current_line)));
-				finished_current_line = true;
-			}
-		}
+			System.out.println(current_line);
+			airports.add(new Airport(getAirportName(current_line), getAirportCountry(current_line),
+					getAirportCity(current_line), getAirportIATA(current_line), getAirportLatitude(current_line),
+					getAirportLongitude(current_line), getAirportTimezone(current_line)));
+		//}
 		
 		return airports;
 	}
@@ -113,5 +117,6 @@ public class DatabaseParser {
 		DatabaseParser parser = new DatabaseParser("C:\\Users\\johnm\\Documents\\GitHub\\AirTravelSystem\\ATS\\airports.dat.txt");
 		
 		ArrayList<Airport> airport = parser.parseAirports();
+		System.out.println(airport.get(0));
 	}
 }

@@ -8,7 +8,7 @@ public class Airport {
 	private final double LATITUDE;
 	private String country;
 	private String city;
-	
+	private String IATA_code;
 	public Airport (String name, String country, String city, String code, double longitude, double latitude, String timezone) {
 		
 		this.airport_name = name;
@@ -16,6 +16,7 @@ public class Airport {
 		this.LATITUDE = latitude;
 		this.country = country;
 		this.city = city;
+		this.IATA_code = code;
 	}
 	
 	public void addRoute(Route route) {
@@ -30,7 +31,10 @@ public class Airport {
 	private double getLatitude() {
 		return this.LATITUDE;
 	}
-	
+	public String toString() {
+		return "Airport name: " + this.airport_name +" Airport City: "+ this.city + "Airport Country:  " + this.country  + 
+				" IATACode: " + this.IATA_code;
+	}
 	//MOVE TO ROUTE
 	private double setRouteDistance(Route route) {
 		
